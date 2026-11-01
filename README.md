@@ -111,7 +111,7 @@ my tile", photos, plus optional timing, message and email. It validates in the
 browser, has a honeypot for bots, and only spends a request when the form is
 genuinely filled in.
 
-Quote requests are emailed to **thebusinessbrainwave411@gmail.com** through
+Quote requests are emailed to **serviceslgrtile@gmail.com** (LGR's inbox) through
 [FormSubmit](https://formsubmit.co) (no account needed). The form posts natively
 (`formMode = 'native'` in `assets/site.js`), so the photos arrive as email
 attachments, and the visitor lands on `/thank-you/`. Each email has the subject
@@ -124,7 +124,7 @@ then send a second test. After activating, FormSubmit offers a random alias
 address; swap it into `formEndpoint` so the Gmail address is not in the page
 source.
 
-To move leads to Lucas later, change the address in `formEndpoint`. To use a
+To send leads somewhere else, change the address in `formEndpoint`. To use a
 background API instead (n8n webhook, Formspree, Getform, a Worker), set
 `formMode = 'fetch'` and point `formEndpoint` at it: the form then posts
 multipart/form-data and redirects to `/thank-you/` on a 2xx. Without an
@@ -246,8 +246,8 @@ lands:
 
 1. Confirm the phone number, email and service area.
 2. Get written OK for the review quotes and the photos.
-3. Activate FormSubmit with a test quote, test again end to end, and move
-   delivery to Lucas once he signs.
+3. Activate FormSubmit: the first test quote sends an activation link to
+   serviceslgrtile@gmail.com, which Lucas has to click. Then test end to end.
 4. Create and verify the Google Business Profile, link it to the site, and ask
    past Thumbtack customers for Google reviews — the brief calls this the top
    local-search lever.
