@@ -12,7 +12,7 @@
   // mail app (see README). Set to an endpoint that accepts multipart/form-data
   // (fields + photo files): an n8n webhook, Formspree, Getform or a Worker.
   // The form posts there and redirects to /thank-you/ on a 2xx.
-  var formEndpoint = 'https://formsubmit.co/thebusinessbrainwave411@gmail.com';
+  var formEndpoint = 'https://formsubmit.co/serviceslgrtile@gmail.com';
 
   // 'native' = a normal form post (FormSubmit: emails the fields with the
   // photos attached, then returns to /thank-you/). 'fetch' = post in the
