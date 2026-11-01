@@ -32,7 +32,7 @@
     'work-6': 'shower-gray-niche.webp',
     'work-7': 'kitchen-herringbone-detail.webp',
     'work-8': 'bathroom-accent-wall.webp',
-    'work-9': 'shower-subway-stacked.webp',
+    'work-9': 'kitchen-mosaic-dark.webp',
 
     'showers-hero': 'shower-gray-plank-wide.webp',
     'showers-waterproof': 'shower-goboard.webp',
