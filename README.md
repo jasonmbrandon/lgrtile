@@ -178,7 +178,8 @@ scroll-driven code only computes while its section is near the viewport. Under
 the tilt is skipped.
 
 **Swapping the scene photo:** the wall reads
-`assets/photos/shower-gray-plank-43.webp`, set once as `--wall-photo` in
+`assets/photos/shower-subway-stacked.webp` (moved off the gray plank shower,
+which is now the hero photo), set once as `--wall-photo` in
 `assets/motion.css`. A better photo of a tiled wall needs no other change — but
 it must be **4:3**, or the tiles will stretch.
 
