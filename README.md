@@ -111,22 +111,24 @@ my tile", photos, plus optional timing, message and email. It validates in the
 browser, has a honeypot for bots, and only spends a request when the form is
 genuinely filled in.
 
-Out of the box **it does not send anything** until `formEndpoint` is set: it composes an email to
-`serviceslgrtile@gmail.com` in the visitor's mail app and tells them to attach
-the photos (or text them to 407-435-2706). That is honest, but it is not what the
-brief asks for — Lucas should get the lead by email *and* text, instantly.
+Quote requests are emailed to **thebusinessbrainwave411@gmail.com** through
+[FormSubmit](https://formsubmit.co) (no account needed). The form posts natively
+(`formMode = 'native'` in `assets/site.js`), so the photos arrive as email
+attachments, and the visitor lands on `/thank-you/`. Each email has the subject
+"New tile quote request: <job type> (<ZIP>)", a table of the fields, and the
+customer's email as reply-to when they give one.
 
-To collect submissions server-side, set one line at the top of `assets/site.js`:
+**First submission:** FormSubmit emails an activation link to that inbox before
+it forwards anything. Send one test quote from the live site, click the link,
+then send a second test. After activating, FormSubmit offers a random alias
+address; swap it into `formEndpoint` so the Gmail address is not in the page
+source.
 
-```js
-var formEndpoint = 'https://…';   // accepts multipart/form-data, returns 2xx
-```
-
-With an endpoint set, the form posts the fields (including the photo files) and
-redirects to `/thank-you/` on success. Options that handle file uploads out of
-the box: Formspree, Basin, Getform, or a small Cloudflare Worker that forwards to
-email and SMS. Nothing is wired to a vendor yet — that is a decision for the
-call, and it needs his approval before anything goes live.
+To move leads to Lucas later, change the address in `formEndpoint`. To use a
+background API instead (n8n webhook, Formspree, Getform, a Worker), set
+`formMode = 'fetch'` and point `formEndpoint` at it: the form then posts
+multipart/form-data and redirects to `/thank-you/` on a 2xx. Without an
+endpoint, it falls back to opening the visitor's mail app.
 
 `assets/site.js` also fires `quote_request`, `call_click`, `text_click` and
 `gallery_filter` events through `gtag` / `dataLayer`, so form submissions can be
@@ -243,7 +245,8 @@ lands:
 
 1. Confirm the phone number, email and service area.
 2. Get written OK for the review quotes and the photos.
-3. Point the form at a real endpoint and test one submission end to end.
+3. Activate FormSubmit with a test quote, test again end to end, and move
+   delivery to Lucas once he signs.
 4. Create and verify the Google Business Profile, link it to the site, and ask
    past Thumbtack customers for Google reviews — the brief calls this the top
    local-search lever.
