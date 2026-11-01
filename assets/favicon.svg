@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" role="img" aria-label="LGR Tile">
+<rect width="220" height="220" fill="#141a24"/>
+<g transform="translate(60.5,60.5) rotate(45 49.5 49.5)">
+<rect x="0" y="0" width="46" height="46" rx="4" fill="#f39020"/>
+<rect x="53" y="0" width="46" height="46" rx="4" fill="#1fae8c"/>
+<rect x="0" y="53" width="46" height="46" rx="4" fill="#1fae8c"/>
+<rect x="53" y="53" width="46" height="46" rx="4" fill="#ffffff"/>
+</g>
+</svg>
