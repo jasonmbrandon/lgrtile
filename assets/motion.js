@@ -358,6 +358,49 @@
   })();
 
   /* ------------------------------------------------------------------
+     hero: the tile name rotates inside "… specialist"
+     ------------------------------------------------------------------ */
+
+  (function specialty() {
+    var spec = document.querySelector('.spec');
+    if (!spec || reduce) return;
+
+    var words = (spec.getAttribute('data-spec') || '')
+      .split(',')
+      .map(function (w) {
+        return w.trim();
+      })
+      .filter(Boolean);
+    var word = spec.querySelector('.spec__word');
+    if (words.length < 2 || !word) return;
+
+    /* the phrase gets its own line above 760px; below that it stays static */
+    var wideEnough = function () {
+      return window.innerWidth >= 760;
+    };
+    if (!wideEnough()) return;
+
+    window.addEventListener('resize', function () {
+      if (!wideEnough()) word.textContent = words[0];
+    });
+
+    var index = 0;
+    window.setInterval(function () {
+      if (document.hidden || !wideEnough()) return;
+      index = (index + 1) % words.length;
+      word.classList.add('is-out');
+      window.setTimeout(function () {
+        word.textContent = words[index];
+        word.classList.add('is-below');
+        word.classList.remove('is-out');
+        /* force the start state before releasing the transition */
+        void word.offsetWidth;
+        word.classList.remove('is-below');
+      }, 300);
+    }, 3000);
+  })();
+
+  /* ------------------------------------------------------------------
      finishes band — parallax + pointer tilt in CSS 3D
      ------------------------------------------------------------------ */
 

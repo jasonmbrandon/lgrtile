@@ -195,6 +195,42 @@
   background: var(--teal);
 }
 
+/* ---------- hero: rotating tile name ----------
+   On wider screens the "<material> specialist" phrase sits on its own line,
+   so a longer material can never re-wrap the rest of the headline. Below
+   760px the headline is static and this block does nothing. */
+
+@media (min-width: 760px) {
+  .hero h1 em {
+    display: block;
+    white-space: nowrap;
+  }
+}
+
+.spec { display: inline-block; }
+
+.spec__word {
+  display: inline-block;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), filter 0.3s var(--ease);
+}
+.spec__word.is-out {
+  opacity: 0;
+  transform: translateY(-0.26em);
+  filter: blur(3px);
+}
+.spec__word.is-below {
+  transition: none;
+  opacity: 0;
+  transform: translateY(0.26em);
+  filter: blur(3px);
+}
+.spec__measure {
+  position: absolute;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 /* ---------- pointer tilt (cards, work shots) ---------- */
 
 .tilt {
@@ -333,6 +369,7 @@
   .build__meter { display: none; }
   .slab { transform: none; }
   .tilt { transition: none; }
+  .spec__word { transition: none; }
 }
 
 @media print {

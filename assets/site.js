@@ -26,10 +26,10 @@
     'work-6': 'shower-gray-niche.webp',
     'work-7': 'kitchen-herringbone-detail.webp',
     'work-8': 'bathroom-accent-wall.webp',
-    'work-9': 'shower-in-progress.webp',
+    'work-9': 'shower-goboard.webp',
 
     'showers-hero': 'shower-gray-plank-wide.webp',
-    'showers-waterproof': 'shower-in-progress.webp',
+    'showers-waterproof': 'shower-goboard.webp',
     'bathroom-floor': 'bathroom-floor-detail.webp',
     'sb-1': 'shower-marble-portrait.webp',
     'sb-2': 'shower-gray-niche.webp',
@@ -37,12 +37,17 @@
     'sb-4': 'bathroom-wood-ceiling.webp',
     'sb-5': 'bathroom-accent-wall.webp',
     'sb-6': 'shower-in-progress.webp',
+    'sb-7': 'shower-subway-stacked.webp',
+    'sb-8': 'bathroom-demo.webp',
 
     'backsplash-hero': 'kitchen-herringbone-wide.webp',
     'backsplash-styles': 'kitchen-herringbone-detail.webp',
-    'bs-1': 'kitchen-herringbone-43.webp',
-    'bs-2': 'kitchen-herringbone-detail.webp',
-    'bs-3': 'kitchen-herringbone-wide.webp',
+    'bs-1': 'kitchen-herringbone-white.webp',
+    'bs-2': 'kitchen-herringbone-43.webp',
+    'bs-3': 'kitchen-herringbone-detail.webp',
+    'bs-4': 'kitchen-mosaic-dark.webp',
+    'bs-5': 'kitchen-subway-green.webp',
+    'bs-6': 'kitchen-mosaic-detail.webp',
 
     'floors-hero': 'floor-sunroom-wide.webp',
     'fl-1': 'floor-sunroom-wide.webp',
@@ -59,9 +64,15 @@
     'g-07': 'bathroom-accent-wall.webp',
     'g-08': 'kitchen-herringbone-43.webp',
     'g-09': 'kitchen-herringbone-detail.webp',
-    'g-10': 'kitchen-herringbone-wide.webp',
+    'g-10': 'kitchen-mosaic-detail.webp',
     'g-11': 'floor-sunroom-wide.webp',
-    'g-12': 'floor-sunroom-43.webp'
+    'g-12': 'floor-sunroom-43.webp',
+    'g-13': 'shower-subway-stacked.webp',
+    'g-14': 'shower-goboard.webp',
+    'g-15': 'bathroom-demo.webp',
+    'g-16': 'kitchen-herringbone-white.webp',
+    'g-17': 'kitchen-mosaic-dark.webp',
+    'g-18': 'kitchen-subway-green.webp'
   };
 
   var CONTACT = {

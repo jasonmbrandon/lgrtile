@@ -26,7 +26,7 @@ root-relative asset and page links.
 | `/showers-bathrooms/` | `showers-bathrooms/index.html` | Ranks for "tile shower Orlando": waterproofing, process, gallery, FAQ |
 | `/backsplashes/` | `backsplashes/index.html` | Entry offer: styles, what to send, three-step job, gallery, FAQ |
 | `/floors/` | `floors/index.html` | Volume jobs: prep, large-format, transitions, `#stone` section, gallery, FAQ |
-| `/gallery/` | `gallery/index.html` | 12 photo slots, filterable by job type |
+| `/gallery/` | `gallery/index.html` | 18 photo slots, filterable by job type |
 | `/quote/` | `quote/index.html` | Photo-upload quote form, small-job block |
 | `/thank-you/` | `thank-you/index.html` | Confirmation page after a server-side submit (noindex) |
 
@@ -50,18 +50,25 @@ nothing else changes.
 
 ## The photos
 
-The site runs on LGR's own job photos. They were cropped out of three screenshots
-of the company Instagram grid, colour corrected lightly, upscaled, sharpened and
-encoded to WebP — 13 files in `assets/photos/`, 10–46 KB each.
+The site runs on LGR's own job photos. They were cropped out of screenshots of
+the company Instagram grid, colour corrected lightly, upscaled, sharpened and
+encoded to WebP — 20 files in `assets/photos/`, 11–46 KB each.
 
 | Files | Show |
 | --- | --- |
 | `shower-marble-portrait`, `shower-gray-plank-43`, `shower-gray-plank-wide` | Marble-look and gray plank-look showers |
 | `shower-gray-niche` | Pebble mosaic niche |
-| `shower-in-progress` | Pan and curb waterproofed before tile |
+| `shower-subway-stacked` | Stacked subway tile on a shower wall |
+| `shower-in-progress`, `shower-goboard`, `bathroom-demo` | The build: pan waterproofed, walls boarded and seams taped, room stripped back |
 | `bathroom-floor-detail`, `bathroom-accent-wall`, `bathroom-wood-ceiling` | Bathroom floor, accent wall, wood-look ceiling |
 | `kitchen-herringbone-43`, `-detail`, `-wide` | Herringbone mosaic backsplash, three framings |
+| `kitchen-herringbone-white`, `kitchen-mosaic-dark`, `kitchen-mosaic-detail`, `kitchen-subway-green` | More kitchens: white herringbone, dark marble mosaic wide and close, subway under green cabinets |
 | `floor-sunroom-wide`, `floor-sunroom-43` | Large-format floor in a sunroom |
+
+The three build photos are the weakest on resolution and the strongest on
+credibility — the taped GoBoard shower is the only proof on the site that the
+waterproofing is real, so they are used where a prospect is deciding whether to
+believe the pitch.
 
 **Resolution ceiling:** each screenshot tile is about 465 px wide, so these files
 are upscaled roughly 1.5x for cards and 1.7x for the hero. They read fine at normal
@@ -144,9 +151,18 @@ same two files can be copied into another spec site.
   backwards re-stacks the wall.
 - **Finishes band** (`#finishes`) — four CSS-3D slabs that tilt toward the pointer
   and drift against each other on scroll. Transforms only, no WebGL.
+- **Rotating hero word** — above 760px the headline cycles the material in
+  "… specialist": tile, marble, mosaic, stone, slate. The phrase is given its own
+  line so a longer name can never re-wrap the rest of the headline, and under
+  760px the headline is static — phones never see a layout shift. Edit the list in
+  `data-spec` on the `<em>` in `index.html`.
 - **Smaller touches** — a reading-progress hairline, staggered card and gallery
   reveals, a pointer tilt on cards and job photos, hero parallax, and the proof
   bar counting up once to its real figures.
+
+Those five materials are the ones named in the brief. If Lucas would rather not
+be called a "marble specialist" or a "slate specialist", drop the word from
+`data-spec` — the effect works with two or more.
 
 All of it runs through a single `requestAnimationFrame` loop, and the
 scroll-driven code only computes while its section is near the viewport. Under
