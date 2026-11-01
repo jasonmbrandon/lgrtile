@@ -9,18 +9,19 @@
      ------------------------------------------------------------------ */
 
   // Where quote requests go. Leave empty to fall back to the visitor's
-  // mail app (see README). Set to a form service or Worker URL that accepts
-  // JSON and this posts to it instead, then redirects to /thank-you/.
+  // mail app (see README). Set to an endpoint that accepts multipart/form-data
+  // (fields + photo files): an n8n webhook, Formspree, Getform or a Worker.
+  // The form posts there and redirects to /thank-you/ on a 2xx.
   var formEndpoint = '';
 
   // Real job photos. Drop files into /assets/photos/ and map a slot key here
   // (each .shot in the HTML carries data-photo="key"). Empty = tiled
   // placeholder with its label visible.
   var PHOTOS = {
-    'hero-shower': 'shower-marble-portrait.webp',
+    'hero-shower': 'shower-gray-plank-wide.webp',
     'work-1': 'floor-sunroom-wide.webp',
     'work-2': 'kitchen-herringbone-43.webp',
-    'work-3': 'shower-gray-plank-43.webp',
+    'work-3': 'shower-marble-portrait.webp',
     'work-4': 'bathroom-floor-detail.webp',
     'work-5': 'bathroom-wood-ceiling.webp',
     'work-6': 'shower-gray-niche.webp',
@@ -206,6 +207,8 @@
     if (!src) return;
     var nodes = document.querySelectorAll('[data-photo="' + key + '"]');
     Array.prototype.forEach.call(nodes, function (slot) {
+      /* Slots pre-rendered in the HTML already hold their photo. */
+      if (slot.querySelector('img.photo')) return;
       var img = document.createElement('img');
       img.className = 'photo';
       img.alt = slot.getAttribute('data-alt') || '';
