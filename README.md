@@ -42,7 +42,9 @@ Taken from the brief and the placeholder logo:
 - Off-white `#F7F5F2` — light section backgrounds
 - Headings: Roboto Slab (variable, self-hosted) · Body: Montserrat (variable, self-hosted)
 
-`assets/logo-dark.svg` is the white wordmark for dark sections and
+`assets/logo-header-dark.svg` is the compact header lockup (tile mark +
+"LGR Tile"), sized to stay readable at 40px tall; `logo-header-light.svg` is
+its navy version. `assets/logo-dark.svg` is the full white wordmark for dark sections and
 `assets/logo-light.svg` is the navy wordmark for white sections; both come from
 `placeholder-logo-dark.svg`. `assets/favicon.svg` is the tile mark on its own.
 Swap in Lucas's own logo files when he approves one — same names, same folders,
@@ -83,9 +85,13 @@ labelled panel until one exists.
 ### How the slots work
 
 Each slot in the HTML carries `data-photo="key"`; `assets/site.js` maps keys to
-files in the `PHOTOS` object at the top. A mapped key fades the photo in over the
-panel and hides the label; an unmapped key keeps the labelled panel. To add a
-photo, drop the file in `assets/photos/` and add the key.
+files in the `PHOTOS` object at the top. Mapped slots are pre-rendered: the
+`<img>` is written into the HTML (with width, height and lazy loading, and
+`fetchpriority="high"` on hero slots), so photos show without JavaScript, load
+faster and can be indexed. An unmapped key keeps the labelled panel, and the
+script still fills any mapped slot that has no `<img>` yet. To add a photo, drop
+the file in `assets/photos/`, add the key, and add the matching `<img>` to the
+slot (copy one from another slot).
 
 | Page | Keys |
 | --- | --- |
@@ -105,22 +111,24 @@ my tile", photos, plus optional timing, message and email. It validates in the
 browser, has a honeypot for bots, and only spends a request when the form is
 genuinely filled in.
 
-Out of the box **it does not send anything**: it composes an email to
-`serviceslgrtile@gmail.com` in the visitor's mail app and tells them to attach
-the photos (or text them to 407-435-2706). That is honest, but it is not what the
-brief asks for — Lucas should get the lead by email *and* text, instantly.
+Quote requests are emailed to **thebusinessbrainwave411@gmail.com** through
+[FormSubmit](https://formsubmit.co) (no account needed). The form posts natively
+(`formMode = 'native'` in `assets/site.js`), so the photos arrive as email
+attachments, and the visitor lands on `/thank-you/`. Each email has the subject
+"New tile quote request: <job type> (<ZIP>)", a table of the fields, and the
+customer's email as reply-to when they give one.
 
-To collect submissions server-side, set one line at the top of `assets/site.js`:
+**First submission:** FormSubmit emails an activation link to that inbox before
+it forwards anything. Send one test quote from the live site, click the link,
+then send a second test. After activating, FormSubmit offers a random alias
+address; swap it into `formEndpoint` so the Gmail address is not in the page
+source.
 
-```js
-var formEndpoint = 'https://…';   // accepts multipart/form-data, returns 2xx
-```
-
-With an endpoint set, the form posts the fields (including the photo files) and
-redirects to `/thank-you/` on success. Options that handle file uploads out of
-the box: Formspree, Basin, Getform, or a small Cloudflare Worker that forwards to
-email and SMS. Nothing is wired to a vendor yet — that is a decision for the
-call, and it needs his approval before anything goes live.
+To move leads to Lucas later, change the address in `formEndpoint`. To use a
+background API instead (n8n webhook, Formspree, Getform, a Worker), set
+`formMode = 'fetch'` and point `formEndpoint` at it: the form then posts
+multipart/form-data and redirects to `/thank-you/` on a 2xx. Without an
+endpoint, it falls back to opening the visitor's mail app.
 
 `assets/site.js` also fires `quote_request`, `call_click`, `text_click` and
 `gallery_filter` events through `gtag` / `dataLayer`, so form submissions can be
@@ -143,8 +151,8 @@ Two files sit on top of the static site: `assets/motion.css` and
 a page and it falls back to a still photo. No dependency, no build step, and the
 same two files can be copied into another spec site.
 
-- **The wall scene** (`#build`, home page) — a sticky viewport inside a 260vh
-  section. One shower photo is cut into 48 tiles (24 on phones) that start below
+- **The wall scene** (`#build`, home page) — a sticky viewport inside a 150vh
+  section (shortened from 260vh so the services come sooner). One shower photo is cut into 48 tiles (24 on phones) that start below
   the frame and lift into place course by course, bottom row first. The grout
   joints are a 1px inset shadow on each tile; the finished wall is the original
   photo reassembled pixel-exactly. Scroll drives every transform, so scrubbing
@@ -152,7 +160,9 @@ same two files can be copied into another spec site.
 - **Finishes band** (`#finishes`) — four CSS-3D slabs that tilt toward the pointer
   and drift against each other on scroll. Transforms only, no WebGL.
 - **Rotating hero word** — above 760px the headline cycles the material in
-  "… specialist": tile, marble, mosaic, stone, slate. The phrase is given its own
+  "… specialist": tile and mosaic. Marble, stone and slate were taken out because
+  the site has no stone jobs to back them up; add them back only if Lucas does
+  that work and there are photos of it. The phrase is given its own
   line so a longer name can never re-wrap the rest of the headline, and under
   760px the headline is static — phones never see a layout shift. Edit the list in
   `data-spec` on the `<em>` in `index.html`.
@@ -160,9 +170,7 @@ same two files can be copied into another spec site.
   reveals, a pointer tilt on cards and job photos, hero parallax, and the proof
   bar counting up once to its real figures.
 
-Those five materials are the ones named in the brief. If Lucas would rather not
-be called a "marble specialist" or a "slate specialist", drop the word from
-`data-spec` — the effect works with two or more.
+The effect works with two or more words in `data-spec`.
 
 All of it runs through a single `requestAnimationFrame` loop, and the
 scroll-driven code only computes while its section is near the viewport. Under
@@ -237,7 +245,8 @@ lands:
 
 1. Confirm the phone number, email and service area.
 2. Get written OK for the review quotes and the photos.
-3. Point the form at a real endpoint and test one submission end to end.
+3. Activate FormSubmit with a test quote, test again end to end, and move
+   delivery to Lucas once he signs.
 4. Create and verify the Google Business Profile, link it to the site, and ask
    past Thumbtack customers for Google reviews — the brief calls this the top
    local-search lever.

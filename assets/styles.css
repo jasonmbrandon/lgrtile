@@ -293,7 +293,7 @@ button { font: inherit; color: inherit; }
 }
 
 .brand { display: block; flex: none; }
-.brand img { height: 42px; width: auto; }
+.brand img { height: 40px; width: auto; }
 
 .nav {
   display: flex;
@@ -513,8 +513,9 @@ button { font: inherit; color: inherit; }
 .hero-badge .stars { color: var(--orange); font-size: 0.82rem; letter-spacing: 0.12em; line-height: 1.2; }
 
 @media (max-width: 900px) {
-  .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 40px 56px; }
-  .hero-art { order: -1; max-width: 520px; }
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); padding-block: 28px 56px; }
+  .hero-art { order: 1; max-width: 560px; }
+  .hero-art .shot { aspect-ratio: 16 / 10; }
   .hero-badge { left: auto; right: 12px; bottom: 12px; padding: 10px 14px; }
   .hero-badge strong { font-size: 1.2rem; }
 }
@@ -598,6 +599,7 @@ a.shot:hover img.photo { transform: scale(1.045); }
 .shot--gold { --tone-a: #2b2418; --tone-b: #1a1610; --tile: 72px; }
 .shot--stone { --tone-a: #2a2f36; --tone-b: #1b1f25; --tile: 88px; }
 .shot--tall { min-height: 0; aspect-ratio: 4 / 5; }
+.shot--hero { min-height: 0; aspect-ratio: 4 / 3; }
 
 /* any slot with a ratio set by its context drops the base min-height, so a
    narrow column can never force the grid wider than the screen */

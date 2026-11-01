@@ -9,18 +9,24 @@
      ------------------------------------------------------------------ */
 
   // Where quote requests go. Leave empty to fall back to the visitor's
-  // mail app (see README). Set to a form service or Worker URL that accepts
-  // JSON and this posts to it instead, then redirects to /thank-you/.
-  var formEndpoint = '';
+  // mail app (see README). Set to an endpoint that accepts multipart/form-data
+  // (fields + photo files): an n8n webhook, Formspree, Getform or a Worker.
+  // The form posts there and redirects to /thank-you/ on a 2xx.
+  var formEndpoint = 'https://formsubmit.co/thebusinessbrainwave411@gmail.com';
+
+  // 'native' = a normal form post (FormSubmit: emails the fields with the
+  // photos attached, then returns to /thank-you/). 'fetch' = post in the
+  // background to a JSON/multipart API (n8n, Formspree, Getform, a Worker).
+  var formMode = 'native';
 
   // Real job photos. Drop files into /assets/photos/ and map a slot key here
   // (each .shot in the HTML carries data-photo="key"). Empty = tiled
   // placeholder with its label visible.
   var PHOTOS = {
-    'hero-shower': 'shower-marble-portrait.webp',
+    'hero-shower': 'shower-gray-plank-wide.webp',
     'work-1': 'floor-sunroom-wide.webp',
     'work-2': 'kitchen-herringbone-43.webp',
-    'work-3': 'shower-gray-plank-43.webp',
+    'work-3': 'shower-marble-portrait.webp',
     'work-4': 'bathroom-floor-detail.webp',
     'work-5': 'bathroom-wood-ceiling.webp',
     'work-6': 'shower-gray-niche.webp',
@@ -206,6 +212,8 @@
     if (!src) return;
     var nodes = document.querySelectorAll('[data-photo="' + key + '"]');
     Array.prototype.forEach.call(nodes, function (slot) {
+      /* Slots pre-rendered in the HTML already hold their photo. */
+      if (slot.querySelector('img.photo')) return;
       var img = document.createElement('img');
       img.className = 'photo';
       img.alt = slot.getAttribute('data-alt') || '';
@@ -442,6 +450,42 @@
       if (button) {
         button.disabled = true;
         button.textContent = 'Sending…';
+      }
+
+      if (formMode === 'native') {
+        var hidden = {
+          _subject: 'New tile quote request: ' + jobLabel + (values.zip ? ' (' + values.zip + ')' : ''),
+          _next: window.location.origin + CONTACT.thanksUrl,
+          _captcha: 'false',
+          _template: 'table'
+        };
+        Object.keys(hidden).forEach(function (name) {
+          var input = form.querySelector('input[type="hidden"][name="' + name + '"]');
+          if (!input) {
+            input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = name;
+            form.appendChild(input);
+          }
+          input.value = hidden[name];
+        });
+        if (values.email) {
+          var replyTo = form.querySelector('input[type="hidden"][name="_replyto"]');
+          if (!replyTo) {
+            replyTo = document.createElement('input');
+            replyTo.type = 'hidden';
+            replyTo.name = '_replyto';
+            form.appendChild(replyTo);
+          }
+          replyTo.value = values.email;
+        }
+        var trap = form.elements.company_website;
+        if (trap && trap.parentNode) trap.parentNode.removeChild(trap);
+        form.action = formEndpoint;
+        form.method = 'POST';
+        form.enctype = 'multipart/form-data';
+        HTMLFormElement.prototype.submit.call(form);
+        return;
       }
 
       var payload = new FormData(form);

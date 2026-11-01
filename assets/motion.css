@@ -34,7 +34,7 @@
   color: #dfe4ea;
   overflow: clip;
 }
-.js .build { height: 260vh; }
+.js .build { height: 150vh; }
 
 .build__sticky {
   display: flex;
@@ -341,14 +341,14 @@
   .build__lede { display: none; }
   .build__steps { margin-top: 12px; gap: 6px; }
   .build__steps li { font-size: 0.8rem; padding-top: 8px; }
-  .js .build { height: 240vh; }
+  .js .build { height: 140vh; }
   .build__stage { max-width: 520px; }
   .slabs { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
   .slab span { letter-spacing: 0.1em; }
 }
 
 @media (max-width: 560px) {
-  .js .build { height: 210vh; }
+  .js .build { height: 130vh; }
   .build__steps li { font-size: 0.78rem; }
   .build__done { left: 8px; bottom: 8px; padding: 5px 9px; font-size: 0.54rem; }
 }
